@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "target": "ES6",
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true
+  }
+}
