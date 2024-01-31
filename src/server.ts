@@ -3,6 +3,7 @@ import router from "./router.ts";
 import morgan from "morgan";
 import { protect } from "./modules/auth.ts";
 import { createUser, signIn } from "./handlers/user.ts";
+import errorHandler from "./handlers/error.ts";
 
 const app = express();
 
@@ -24,5 +25,7 @@ app.use("/api", protect, router);
 
 app.post("/user", createUser);
 app.post("/login", signIn);
+
+app.use(errorHandler);
 
 export default app;

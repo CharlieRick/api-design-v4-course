@@ -12,7 +12,7 @@ export const createUser = async (req, res) => {
   });
 
   const token = createJWT(user);
-  res.json({ token });
+  res.json({ data: { token } });
 };
 
 export const signIn = async (req, res) => {
@@ -39,5 +39,5 @@ export const signIn = async (req, res) => {
   }
 
   const token = createJWT(user);
-  res.json({ token });
-}
+  res.json({ data: { token } });
+};

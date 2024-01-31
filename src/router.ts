@@ -1,43 +1,64 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { handleInputErrors } from "./modules/middleware";
+import { handleInputErrors } from "./modules/middleware.ts";
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from "./handlers/product.ts";
+import {
+  createUpdate,
+  deleteUpdate,
+  getUpdate,
+  getUpdates,
+  updateUpdate,
+} from "./handlers/update.ts";
+import errorHandler from "./handlers/error.ts";
 
 const router = Router();
 
 // Product
-router.get("/product", (req, res) => {
-  res.json({ message: `hello friend, the password is: ${req.secret_key}` });
-});
-router.get("/product/:id", () => {});
+router.get("/product", getProducts);
+router.get("/product/:id", getProduct);
 router.put(
   "/product/:id",
   body("name").isString(),
   handleInputErrors,
-  () => {}
+  updateProduct
 );
-router.post("/product", body("name").isString(), handleInputErrors, () => {});
-router.delete("/product/:id", () => {});
+router.post(
+  "/product",
+  body("name").isString(),
+  body("description").isString(),
+  body("price").isFloat(),
+  handleInputErrors,
+  createProduct
+);
+router.delete("/product/:id", deleteProduct);
 
 // Updates
-router.get("/update", () => {});
-router.get("/update/:id", () => {});
+router.get("/update", getUpdates);
+router.get("/update/:id", getUpdate);
 router.put(
   "/update/:id",
   body("title").optional(),
-  body("name").optional(),
-  body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
+  body("body").optional(),
+  body("status").optional().isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
   body("version").optional(),
   handleInputErrors,
-  () => {}
+  updateUpdate
 );
 router.post(
   "/update",
   body("title").isString(),
-  body("name").isString(),
+  body("body").isString(),
+  body("productId").isString(),
   handleInputErrors,
-  () => {}
+  createUpdate
 );
-router.delete("/update/:id", () => {});
+router.delete("/update/:id", deleteUpdate);
 
 // Update features
 router.get("/update-feature", () => {});
@@ -56,5 +77,7 @@ router.post(
   () => {}
 );
 router.delete("/update-feature/:id", () => {});
+
+router.use(errorHandler);
 
 export default router;
