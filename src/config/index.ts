@@ -19,18 +19,21 @@ let envConfig = {}
 switch (env) {
   case 'development':
   case 'dev':
-    envConfig = require('./dev').config
-    break
-  case 'test':
-  case 'testing':
-    envConfig = require('./testing').config
-    break
+    envConfig = import('./local').then((module) => module);
+    break;
   case 'prod':
   case 'production':
-    envConfig = require('./prod').config
-    break
+    envConfig = import('./prod').then((module) => module);
+    break;
   default:
-    envConfig = require('./dev').config
+    envConfig = import('./local').then((module) => module);
 }
+
+// Using Promise.all to wait for all dynamic imports to resolve
+Promise.all([envConfig]).then(([resolvedEnvConfig]) => {
+  const mergedConfig = merge(baseConfig, resolvedEnvConfig);
+  // Do something with the merged configuration
+  console.log(mergedConfig);
+});
 
 export default merge(baseConfig, envConfig)

@@ -1,5 +1,5 @@
 import { UPDATE_STATUSES, Update } from "@prisma/client";
-import prisma from "../db.ts";
+import prisma from "../db";
 
 // Get all updates
 export const getUpdates = async (req, res) => {

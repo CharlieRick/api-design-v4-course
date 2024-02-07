@@ -1,9 +1,9 @@
 import express from "express";
-import router from "./router.ts";
+import router from "./router";
 import morgan from "morgan";
-import { protect } from "./modules/auth.ts";
-import { createUser, signIn } from "./handlers/user.ts";
-import errorHandler from "./handlers/error.ts";
+import { protect } from "./modules/auth";
+import { createUser, signIn } from "./handlers/user";
+import errorHandler from "./handlers/error";
 
 const app = express();
 

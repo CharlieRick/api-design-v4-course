@@ -1,5 +1,5 @@
-import prisma from "../db.ts";
-import { comparePassword, createJWT, hashPassword } from "../modules/auth.ts";
+import prisma from "../db";
+import { comparePassword, createJWT, hashPassword } from "../modules/auth";
 
 export const createUser = async (req, res) => {
   const { username, password } = req.body;
