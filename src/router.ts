@@ -24,7 +24,8 @@ router.get("/product", getProducts);
 router.get("/product/:id", getProduct);
 router.put(
   "/product/:id",
-  body("name").isString(),
+  body("name").optional().isString(),
+  body("description").optional().isString(),
   handleInputErrors,
   updateProduct
 );
